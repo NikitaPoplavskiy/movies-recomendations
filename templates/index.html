@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Recommendation System</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Movie Recommendations</h1>
+        
+        <!-- Форма для выбора фильма -->
+        <form action="/recommend" method="post" class="form-inline mb-4">
+            <div class="flex-nowrap form-group">
+                <div class="row">
+                    <label for="movieSelect">Choose a movie:</label>
+                    <div class="col">
+                        <select class="form-control" id="movieSelect" name="movie">
+                            {% for movie_id, movie_title in movie_list %}
+                                <option value="{{ movie_id }}" {% if movie_id|string == selected_movie|string %}selected{% endif %}>{{ movie_title }}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" class="btn btn-primary">Get Recommendations</button>        
+                    </div>
+                </div>            
+            </div>            
+        </form>
+        
+        <!-- Отображение рекомендаций (если они есть) -->
+        {% if recommendations %}
+            <h3>Recommended Movies:</h3>
+            <ul class="list-group">
+                {% for recommendation in recommendations %}
+                    <li class="list-group-item">{{ recommendation }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+
+    <!-- Подключаем скрипты Bootstrap (можно использовать CDN) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.8/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
